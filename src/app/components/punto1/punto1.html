@@ -1,1 +1,29 @@
-<p>punto1 works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="slide-container position-relative overflow-hidden rounded shadow-lg text-white">
+    
+        <img [src]="eventos[indiceActual].img" 
+             class="w-100 slide-imagen" 
+             alt="Imagen del evento">
+
+        <button class="btn slide-btn position-absolute top-50 start-0 translate-middle-y ms-3" 
+                (click)="mostrarEventoAnterior()">
+          &#10094;
+        </button>
+
+        <button class="btn slide-btn position-absolute top-50 end-0 translate-middle-y me-3" 
+                (click)="mostrarSiguienteEvento()">
+          &#10095;
+        </button>
+
+        <div class="slide-texto position-absolute bottom-0 w-100 p-4 text-center">
+          <h2 class="fw-bold">{{ eventos[indiceActual].nombre }}</h2>
+          <p class="mb-0">{{ eventos[indiceActual].descripcion }}</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
