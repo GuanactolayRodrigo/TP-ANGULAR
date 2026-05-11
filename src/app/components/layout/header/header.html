@@ -1,19 +1,38 @@
-<nav class="navbar navbar-expand-lg bg-primary-subtle border border-primary-subtle text-center" data-bs-theme="dark">
-  <div class="container-fluid">
-    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-      <ul class="navbar-nav d-flex align-items-center">
-        <li class="nav-item">
-          <a class="btn btn-outline-warning me-2"  [routerLink]="['punto1']">EVENTOS</a>
+<nav class="navbar navbar-expand-lg bg-primary-subtle shadow-sm border-bottom border-warning" data-bs-theme="dark">
+  <div class="container-fluid px-4">
+    
+    <a class="navbar-brand fw-bold text-white d-flex align-items-center" [routerLink]="['punto1']" routerLinkActive="active">
+      TP Angular
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Desplegar navegación">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav text-center mt-3 mt-lg-0">
+        
+        <li class="nav-item w-100 mb-2 mb-lg-0">
+          <a class="btn btn-outline-warning w-100 me-lg-3 fw-bold" [routerLink]="['punto1']" routerLinkActive="active">
+            EVENTOS
+          </a>
         </li>
-        <li class="nav-item">
-          <a class="btn btn-outline-warning me-2"  [routerLink]="['punto2']">PRODUCTOS</a>
+        <li class="nav-item w-100 mb-2 mb-lg-0">
+          <a class="btn btn-outline-warning w-100 me-lg-3 fw-bold" [routerLink]="['punto2']" routerLinkActive="active">
+            PRODUCTOS
+          </a>
         </li>
-        <li class="nav-item">
-          <a class="btn btn-outline-warning me-2"  [routerLink]="['punto3']">JUEGO</a>
+        <li class="nav-item w-100 mb-2 mb-lg-0">
+          <a class="btn btn-outline-warning w-100 me-lg-3 fw-bold" [routerLink]="['punto3']" routerLinkActive="active">
+            JUEGO
+          </a>
         </li>
-        <li class="nav-item">
-          <a class="btn btn-outline-warning me-2"  [routerLink]="['formulario']">FORMULARIO</a>
+        <li class="nav-item w-100">
+          <a class="btn btn-outline-warning w-100 fw-bold" [routerLink]="['formulario']" routerLinkActive="active">
+            FORMULARIO
+          </a>
         </li>
+        
       </ul>
     </div>
   </div>
