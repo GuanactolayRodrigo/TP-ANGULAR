@@ -1,6 +1,8 @@
-/* Color personalizado para egresados (Violeta) */
+.bg-text{
+  background-color: #031633;
+}
 .bg-purple {
-  background-color: #6f42c1 !important;
+  background-color: #f1b23c !important;
 }
 .text-purple-emphasis {
   color: #491217 !important;

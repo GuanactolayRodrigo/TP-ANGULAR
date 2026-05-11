@@ -1,10 +1,6 @@
-Estado del formulario: {{ formInscripcion.valid ? 'Válido' : 'Inválido' }} <br />
-Estado del DNI: {{ dniInput.valid ? 'Válido' : 'Inválido' }} <br />
-Estado de la categoría: {{categoriaInput.valid ? 'Válida' : 'Inválida' }} <br />
-
 <div class="container my-5">
   <div class="card shadow-sm border-0 mb-5">
-    <div class="card-header bg-primary text-white py-3">
+    <div class="card-header bg-text text-white py-3">
       <h2 class="h4 mb-0 text-center text-white">Proceso de Inscripción a Cursos</h2>
     </div>
     <div class="card-body p-4">
@@ -157,7 +153,7 @@ Estado de la categoría: {{categoriaInput.valid ? 'Válida' : 'Inválida' }} <br
       </div>
     </div>
     <div class="col-md-3">
-      <div class="card text-center border-0 shadow-sm bg-primary text-white">
+      <div class="card text-center border-0 shadow-sm bg-text text-white">
         <div class="card-body">
           <p class="text-uppercase text-white-50 small fw-bold mb-1">Total Recaudado</p>
           <p class="h3 mb-0 text-white">{{ totalGeneral | currency:'ARS':'symbol':'1.2-2' }}</p>
