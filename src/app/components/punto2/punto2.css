@@ -1,0 +1,20 @@
+.card-img-top {
+  height: 400px;
+  object-fit: cover;
+  padding: 10px;
+  background-color: #fcfcfc;
+}
+
+.card {
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.card:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
+  transform: translateY(-5px);
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.5em 0.8em;
+}

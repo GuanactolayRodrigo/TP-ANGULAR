@@ -24,7 +24,7 @@ export class Punto2 {
   productos: Producto[] = [
     { nombre: 'Fuente 500w 80 Plus Bronze', descripcion: 'Fuente de poder 500W con certificación 80 Plus Bronze', img: 'assets/images/fuente.jpg', precio: 350000.00 },
     { nombre: 'Gabinete Gamer Corsair', descripcion: 'Gabinete para gaming con ventiladores incluidos', img: 'assets/images/gabinete.jpg', precio: 100000.00 },
-    { nombre: 'Monitor GTEK', descripcion: 'Monitor LED de 14 pulgadas con resolución HD', img: 'assets/images/monitor.jpg', precio: 250000.00 },
+    { nombre: 'Monitor GTEK', descripcion: 'Monitor LED de 14 pulgadas con resolución Full HD', img: 'assets/images/monitor.jpg', precio: 250000.00 },
     { nombre: 'Monitor PREDATOR', descripcion: 'Monitor LED curvo de 15 pulgadas con resolución HD', img: 'assets/images/monitor2.jpg', precio: 350000.00 },
     { nombre: 'Teclado Mecanico', descripcion: 'Teclado mecanico con retroiluminación RGB', img: 'assets/images/teclado.jpg', precio: 87000.00 },
     { nombre: 'Mouse Gamer', descripcion: 'Mouse ergonómico con alta precisión para gaming', img: 'assets/images/mouse.jpg', precio: 23000.00 },

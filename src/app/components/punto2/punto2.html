@@ -1,1 +1,81 @@
-<p>punto2 works!</p>
+<div class="container">
+  
+  <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+    <h2 class="text-primary fw-bold">NUESTRO CATALOGO</h2>
+    <button class="btn btn-primary btn-lg shadow-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalCarrito">
+      <i class="bi bi-cart4 me-2"></i> Mi Carrito 
+      <span class="badge bg-danger ms-2 rounded-pill">{{ obtenerCantidadTotal() }}</span>
+    </button>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let prod of productos">
+      <div class="card h-100 shadow border-0 overflow-hidden">
+        <img [src]="prod.img" class="card-img-top" [alt]="prod.nombre">
+        
+        <div class="card-body d-flex flex-column text-center bg-white">
+          <h5 class="card-title fw-bold text-dark">{{ prod.nombre }}</h5>
+          <p class="card-text text-muted small">{{ prod.descripcion }}</p>
+          <div class="mt-auto">
+            <h4 class="text-success fw-bold mb-3">${{ prod.precio }}</h4>
+            <button class="btn btn-outline-primary w-100 fw-bold" (click)="agregarAlCarrito(prod)">
+              Añadir al Carrito
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal fade" id="modalCarrito" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title fw-bold">Resumen de Compra</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body p-0"> 
+        <div class="text-center py-5" *ngIf="carrito.length === 0">
+          <p class="text-muted fs-5">Tu carrito está vacio.</p>
+        </div>
+
+        <div class="list-group list-group-flush" *ngIf="carrito.length > 0">
+          <div class="list-group-item p-3 border-start border-4 border-primary" *ngFor="let item of carrito">
+            <div class="d-flex align-items-center">
+              <img [src]="item.producto.img" class="rounded border p-1 bg-light" style="width: 60px; height: 60px; object-fit: contain;">
+              
+              <div class="flex-grow-1 ms-3">
+                <h6 class="mb-1 fw-bold text-dark">{{ item.producto.nombre }}</h6>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="text-primary fw-bold">${{ item.producto.precio }}</span>
+                  
+                  <div class="btn-group shadow-sm">
+                    <button class="btn btn-sm btn-light border" (click)="restarCantidad(item)">-</button>
+                    <span class="btn btn-sm btn-white border-top border-bottom disabled text-dark fw-bold px-3">{{ item.cantidad }}</span>
+                    <button class="btn btn-sm btn-light border" (click)="sumarCantidad(item)">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-light px-4 py-3 border-top">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="mb-0 fw-bold">Total a pagar:</h5>
+              <h4 class="mb-0 text-primary fw-bold">${{ calcularTotal() }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer border-0 p-3">
+        <button type="button" class="btn btn-success px-4 center" data-bs-dismiss="modal">Check Out</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
