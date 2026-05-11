@@ -1,1 +1,168 @@
-<p>formulario works!</p>
+Estado del formulario: {{ formInscripcion.valid ? 'Válido' : 'Inválido' }} <br />
+Estado del DNI: {{ dniInput.valid ? 'Válido' : 'Inválido' }} <br />
+Estado de la categoría: {{categoriaInput.valid ? 'Válida' : 'Inválida' }} <br />
+
+<div class="container my-5">
+  <div class="card shadow-sm border-0 mb-5">
+    <div class="card-header bg-primary text-white py-3">
+      <h2 class="h4 mb-0 text-center text-white">Proceso de Inscripción a Cursos</h2>
+    </div>
+    <div class="card-body p-4">
+      <form (ngSubmit)="registrar()" #formInscripcion="ngForm">
+        <div class="row g-3">
+          
+          <div class="col-md-6">
+            <label for="dni" class="form-label fw-bold">DNI del Alumno</label>
+            <input type="number" id="dni" name="dni" [(ngModel)]="inscripcion.dni" #dniInput="ngModel" required class="form-control sin-flechas" placeholder="Ej: 41222333" pattern="^[0-9]{7,8}$">
+            <div *ngIf="dniInput.invalid && dniInput.touched" class="text-danger mt-1">
+              <div *ngIf="dniInput.errors?.['required']">El DNI es obligatorio.</div>
+              <div *ngIf="dniInput.errors?.['pattern']">El DNI debe contener solo números y tener entre 7 y 8 dígitos.</div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="email" class="form-label fw-bold">Correo Electrónico</label>
+            <input type="email" id="email" name="email" [(ngModel)]="inscripcion.email" #emailInput="ngModel" required class="form-control" placeholder="ejemplo@correo.com" email>
+            <div *ngIf="emailInput.invalid && emailInput.touched" class="text-danger mt-1">
+              <div *ngIf="emailInput.errors?.['required']">El correo electrónico es obligatorio.</div>
+              <div *ngIf="emailInput.errors?.['email']">El correo electrónico debe tener un formato válido.</div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <label for="curso" class="form-label fw-bold">Curso</label>
+            <input type="text" id="curso" name="curso" [(ngModel)]="inscripcion.curso" #cursoInput="ngModel"   required class="form-control" placeholder="Ej: Angular Avanzado y Bootstrap">
+            <div *ngIf="cursoInput.invalid && cursoInput.touched" class="text-danger mt-1">
+              <div *ngIf="cursoInput.errors?.['required']">El nombre del curso es obligatorio.</div>
+              <div *ngIf="cursoInput.errors?.['minlength']">El nombre del curso debe tener al menos 5 caracteres.</div> 
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="precio" class="form-label fw-bold">Precio Base del Curso ($)</label>
+            <input type="number" id="precio" name="precio" [(ngModel)]="inscripcion.precio" min="1" class="form-control bg-light" placeholder="100000.00" readonly>
+          </div>
+
+          <div class="col-md-6">
+            <label for="categoria" class="form-label fw-bold">Categoría de Alumno</label>
+            <select id="categoria" name="categoria" [(ngModel)]="inscripcion.categoriaAlumno" #categoriaInput="ngModel" (change)="calcularPrecioFinal()" required class="form-select">
+              <option [value]="0" disabled selected>Seleccione una opción</option>
+              <option [value]="1">Estudiante (35% Desc.)</option>
+              <option [value]="2">Egresado (50% Desc.)</option>
+              <option [value]="3">Particular (Sin Desc.)</option>
+            </select>
+            <div *ngIf="categoriaInput.invalid && categoriaInput.touched" class="text-danger mt-1">
+              <div *ngIf="categoriaInput.errors?.['required']">La categoría de alumno es obligatoria. Debe seleccionar una opción</div>
+            </div>
+          </div>
+
+          <div *ngIf="inscripcion.precio > 0 && inscripcion.categoriaAlumno > 0" class="col-12 custom-fade-in">
+            <div class="alert alert-success d-flex justify-content-between align-items-center mb-0 py-3" role="alert">
+              <span class="fw-bold fs-5">Precio Final Calculado:</span>
+              <span class="fs-4 fw-extrabold text-success-emphasis">
+                {{ precioCalculado | currency:'ARS':'symbol':'1.2-2' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="col-12 mt-4">
+            <button type="submit" [disabled]="!formInscripcion.valid || inscripcion.categoriaAlumno == 0" class="btn btn-primary w-100 py-2 fs-5 fw-bold">
+              Registrar Inscripción
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0 mb-5">
+    <div class="card-header bg-dark text-white py-3">
+      <h3 class="h5 mb-0 text-white">Inscripciones Realizadas</h3>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover table-striped align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="ps-4">ID</th>
+              <th>DNI</th>
+              <th>Curso</th>
+              <th>Categoría</th>
+              <th>Email</th>
+              <th>Fecha Insc.</th>
+              <th>Precio Base</th>
+              <th>Precio Final</th>
+              <th class="text-center pe-4">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of inscripciones">
+              <td class="ps-4">{{ item.id }}</td>
+              <td>{{ item.dni }}</td>
+              <td>{{ item.curso }}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-info text-dark': item.categoriaAlumno == 1,
+                  'bg-purple text-white': item.categoriaAlumno == 2,
+                  'bg-secondary text-white': item.categoriaAlumno == 3
+                }">
+                  {{ obtenerNombreCategoria(item.categoriaAlumno) }}
+                </span>
+              </td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.fechaInscripcion | date:'dd/MM/yyyy' }}</td>
+              <td>{{ item.precio | currency:'ARS':'symbol':'1.2-2' }}</td>
+              <td class="fw-bold text-primary">{{ item.precioFinal | currency:'ARS':'symbol':'1.2-2' }}</td>
+              <td class="text-center pe-4">
+                <button class="btn btn-outline-danger btn-sm" (click)="eliminar(item.id)">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="inscripciones.length === 0">
+              <td colspan="9" class="text-center text-muted py-4">
+                No hay inscripciones registradas en el sistema.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-3">
+      <div class="card text-center border-0 shadow-sm bg-light-info">
+        <div class="card-body">
+          <p class="text-uppercase text-muted small fw-bold mb-1">Estudiantes</p>
+          <p class="h3 mb-0 text-info-emphasis">{{ obtenerContadorPorCategoria(1) }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center border-0 shadow-sm bg-light-purple">
+        <div class="card-body">
+          <p class="text-uppercase text-muted small fw-bold mb-1">Egresados</p>
+          <p class="h3 mb-0 text-purple-emphasis">{{ obtenerContadorPorCategoria(2) }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center border-0 shadow-sm bg-light-secondary">
+        <div class="card-body">
+          <p class="text-uppercase text-muted small fw-bold mb-1">Particulares</p>
+          <p class="h3 mb-0 text-secondary-emphasis">{{ obtenerContadorPorCategoria(3) }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center border-0 shadow-sm bg-primary text-white">
+        <div class="card-body">
+          <p class="text-uppercase text-white-50 small fw-bold mb-1">Total Recaudado</p>
+          <p class="h3 mb-0 text-white">{{ totalGeneral | currency:'ARS':'symbol':'1.2-2' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

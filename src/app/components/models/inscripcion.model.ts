@@ -1,23 +1,15 @@
 export class Inscripcion {
 
     id: number;
-
     dni: string;
-
     precio: number;
-
     categoriaAlumno: number;
-
     fechaInscripcion: Date;
-
     email: string;
-
     curso: string;
-
     precioFinal: number;
 
     constructor() {
-
         this.id = 0;
         this.dni = '';
         this.precio = 0;
@@ -26,7 +18,6 @@ export class Inscripcion {
         this.email = '';
         this.curso = '';
         this.precioFinal = 0;
-
     }
 
 }
